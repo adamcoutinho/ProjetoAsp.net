@@ -1,0 +1,8 @@
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\bin\Debug\Repository.dll
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\bin\Debug\Repository.pdb
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\bin\Debug\Entity.dll
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\bin\Debug\Entity.pdb
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\obj\Debug\Repository.dll
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\obj\Debug\Repository.pdb
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Repository\bin\Debug\Repository.dll.config

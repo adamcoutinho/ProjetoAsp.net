@@ -1,0 +1,4 @@
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Entity\bin\Debug\Entity.dll
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Entity\bin\Debug\Entity.pdb
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Entity\obj\Debug\Entity.dll
+C:\Users\adamc\Documents\workspace.net\PayMeCard\Entity\obj\Debug\Entity.pdb

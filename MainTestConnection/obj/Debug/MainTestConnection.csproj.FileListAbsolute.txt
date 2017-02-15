@@ -1,0 +1,5 @@
+C:\Users\adamc\Documents\workspace.net\PayMeCard\MainTestConnection\bin\Debug\MainTestConnection.exe.config
+C:\Users\adamc\Documents\workspace.net\PayMeCard\MainTestConnection\bin\Debug\MainTestConnection.exe
+C:\Users\adamc\Documents\workspace.net\PayMeCard\MainTestConnection\bin\Debug\MainTestConnection.pdb
+C:\Users\adamc\Documents\workspace.net\PayMeCard\MainTestConnection\obj\Debug\MainTestConnection.exe
+C:\Users\adamc\Documents\workspace.net\PayMeCard\MainTestConnection\obj\Debug\MainTestConnection.pdb
