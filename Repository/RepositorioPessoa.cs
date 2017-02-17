@@ -11,41 +11,33 @@ using Entity;
 namespace Repository
 {
     public class RepositorioPessoa
-    {        
+    {
 
+        SqlCommand cmd = new SqlCommand();
         public void salvar(Pessoa p)
         {
-            SqlCommand cmd = new SqlCommand();
+           
 
             StringBuilder sql = new StringBuilder();
             sql.Append("INSERT INTO PESSOAS (nome,idade,dataNascimento) values ");
             sql.Append(" ( @nome,@idade,@dataNascimento );");
-            //inicializa a leitura do strinbuilder
-            cmd.CommandType = CommandType.Text;
-            //recebendo a sql do strinbuilder para o metodo CommandText
-            cmd.CommandText = sql.ToString();
-            cmd.Connection = FactoryManager.getConnection();           
+                                         
             cmd.Parameters.Add(new SqlParameter("@nome", p.nome));
             cmd.Parameters.Add(new SqlParameter("@idade", p.idade));
-            cmd.Parameters.Add(new SqlParameter("@dataNascimento", p.dataNascimento));            
-            // responsavel pela transação
-            cmd.Connection.Open();
-            int i = cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
-
+            cmd.Parameters.Add(new SqlParameter("@dataNascimento", p.dataNascimento));
+            SessionFactory.getSql(cmd, sql.ToString());
         }
         public void atualizar(Pessoa p)
         {
-            SqlCommand cmd = new SqlCommand();
+            
             StringBuilder sql = new StringBuilder();
-            sql.Append("INSERT INTO PESSOA ");
-            sql.Append(" ( ?,?,?,? )");
-
+            sql.Append("UPDATE PESSOAS SET IDADE=@IDADE, NOME= @NOME,DATANASCIMENTO=@DATANASC ");
+            sql.Append(" WHERE ID = @ID_UPDATE");           
+            cmd.Parameters.Add(new SqlParameter("@IDADE", p.idade));
+            cmd.Parameters.Add(new SqlParameter("@NOME", p.nome));
+            cmd.Parameters.Add(new SqlParameter("@DATANASC", p.dataNascimento));
+            cmd.Parameters.Add(new SqlParameter("@ID_UPDATE", p.id));
             cmd.Connection = FactoryManager.getConnection();
-
-            cmd.Parameters.Add(new SqlParameter("@nome", p.nome));
-            cmd.Parameters.Add(new SqlParameter("@idade", p.idade));
-
             // responsavel pela transação
             cmd.Connection.Open();
             int i = cmd.ExecuteNonQuery();
@@ -54,25 +46,22 @@ namespace Repository
         
         public void deletar(Pessoa p)
         {
-            SqlCommand cmd = new SqlCommand();
 
-            StringBuilder sql = new StringBuilder();
-            
-
-            cmd.Connection = FactoryManager.getConnection();
-
-
-            // responsavel pela transação
-            cmd.Connection.Open();
-            int i = cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
+            String sql = "DELETE FROM PESSOAS WHERE ID = @ID ;";
+            cmd.Parameters.Add(new SqlParameter("@ID", p.id));
+            SessionFactory.getSql(cmd, sql);
         }
         public Pessoa findById(int id)
         {
-            StringBuilder sql = new StringBuilder();
 
-            SqlCommand cmd = new SqlCommand(sql.ToString(), FactoryManager.getConnection());
+            String sql = "SELECT * FROM PESSOAS where ID = @ID_PESSOA ;";            
+            cmd.Connection = FactoryManager.getConnection();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = sql;
+            cmd.Parameters.Add(new SqlParameter("@ID_PESSOA", id));
+            cmd.Connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
+            
             Pessoa p = null;
             while (reader.Read())
             {
@@ -81,11 +70,18 @@ namespace Repository
             }
             return p;
         }
-
+        public DataTable getConsultarTodos()
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select * from PESSOAS");
+            cmd.CommandText = sql.ToString();
+            return FactoryTable.getDataSource(cmd);
+        }
         private void atribuiValores(Pessoa p,SqlDataReader reader)
         {
-            p.nome = reader["@nome"].ToString();
-            
+            p.id = int.Parse(reader["id"].ToString());
+            p.nome = reader["nome"].ToString();
+            p.dataNascimento = DateTime.Parse(reader["dataNascimento"].ToString());
         }
     }
 }

@@ -16,26 +16,16 @@ namespace PayMeCard
     {
         private ServicePessoa crudPessoa = new Service.ServicePessoa();
         private Pessoa pessoa;
-      
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            showTable();
         }
-        
-       public void consult()
-        {
-            //StringBuilder sql = new StringBuilder();
-            //sql.Append("SELECT * FROM PESSOAS ;");
-            //SqlCommand cmd = new SqlCommand(sql.ToString(), FactoryManager.getConnection());
-            //cmd.Connection.Open();
-            //SqlDataReader reader = cmd.ExecuteReader();
-            //while (reader.Read())
-            //{
 
-            //    Console.Write(reader["nome"].ToString());
-            //}
-            //reader.Close();
-            //cmd.Connection.Close();
+        public void showTable()
+        {
+            this.GridViewPessoa.DataSource = this.crudPessoa.getListarTodos();
+            this.GridViewPessoa.DataBind();
         }
 
         protected void btSalvar_Click(object sender, EventArgs e)
@@ -45,7 +35,29 @@ namespace PayMeCard
             this.pessoa.idade = Convert.ToInt16(txtIdade.Text);
             this.pessoa.dataNascimento = Convert.ToDateTime(txtDate.SelectedDate);
             this.crudPessoa.salvar(pessoa);
-            
+            showTable();
         }
+
+        protected void btnDate_Click(object sender, EventArgs e)
+        {
+            this.txtDate.Visible = true;
+        }
+
+        protected void txtDate_SelectionChanged(object sender, EventArgs e)
+        {
+            this.txtValueDate.Text = txtDate.SelectedDate.ToString();
+            this.txtDate.Visible = false;
+        }
+
+        protected void GridViewPessoa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.pessoa = new Pessoa();
+            GridViewRow row = this.GridViewPessoa.SelectedRow;
+            this.pessoa = this.crudPessoa.getPessoa(int.Parse(row.Cells[1].Text));           
+            this.crudPessoa.deletar(this.pessoa);
+            showTable();            
+        }
+
+
     }
 }
